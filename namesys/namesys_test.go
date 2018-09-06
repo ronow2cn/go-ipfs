@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
-	opts "github.com/ipfs/go-ipfs/namesys/opts"
 	path "gx/ipfs/QmTKaiDxQqVxmA1bRipSuP7hnTSgnMSmEa98NYeS6fcoiv/go-path"
 	"gx/ipfs/QmVNEJ5Vk1e2G5kHMiuVbpD6VQZiK1oS6aWZKjcUQW7hEy/go-unixfs"
+
+	opts "github.com/ipfs/go-ipfs/namesys/opts"
 
 	ipns "gx/ipfs/QmNqBhXpBKa5jcjoUZHfxDgAFxtqK3rDA5jtW811GBvVob/go-ipns"
 	ci "gx/ipfs/QmPvyPwuCgJ7pDmrKDxRtsScJgBaM5h4EpRL2qQJsmXf4n/go-libp2p-crypto"
@@ -23,7 +24,7 @@ type mockResolver struct {
 	entries map[string]string
 }
 
-func testResolution(t *testing.T, resolver Resolver, name string, depth uint, expected string, expError error) {
+func testResolution(t *testing.T, resolver Resolver, name string, depth uint64, expected string, expError error) {
 	t.Helper()
 	p, err := resolver.Resolve(context.Background(), name, opts.Depth(depth))
 	if err != expError {
