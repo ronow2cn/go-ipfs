@@ -12,12 +12,12 @@ import (
 	cmds "github.com/ipfs/go-ipfs/commands"
 	core "github.com/ipfs/go-ipfs/core"
 	e "github.com/ipfs/go-ipfs/core/commands/e"
-	merkledag "gx/ipfs/QmRDaC5z6yXkXTTSWzaxs2sSVBon5RRCN6eNtMmpuHtKCr/go-merkledag"
-	path "gx/ipfs/QmTKaiDxQqVxmA1bRipSuP7hnTSgnMSmEa98NYeS6fcoiv/go-path"
-	resolver "gx/ipfs/QmTKaiDxQqVxmA1bRipSuP7hnTSgnMSmEa98NYeS6fcoiv/go-path/resolver"
-	unixfs "gx/ipfs/QmVNEJ5Vk1e2G5kHMiuVbpD6VQZiK1oS6aWZKjcUQW7hEy/go-unixfs"
-	uio "gx/ipfs/QmVNEJ5Vk1e2G5kHMiuVbpD6VQZiK1oS6aWZKjcUQW7hEy/go-unixfs/io"
-	unixfspb "gx/ipfs/QmVNEJ5Vk1e2G5kHMiuVbpD6VQZiK1oS6aWZKjcUQW7hEy/go-unixfs/pb"
+	merkledag "gx/ipfs/QmSRe5UvVPLJ6LAtVH9gQZwEL4nbck5b5zNe4MChh3LJHk/go-merkledag"
+	path "gx/ipfs/QmXVEFLxXFzdV1HKRrZA7scrnsNhjHRSygPbboTZ4H7Tij/go-path"
+	resolver "gx/ipfs/QmXVEFLxXFzdV1HKRrZA7scrnsNhjHRSygPbboTZ4H7Tij/go-path/resolver"
+	unixfs "gx/ipfs/QmcLmU3rW9jmxPf2SZuvS15Dhtji4TivmuEca58HTdPRBm/go-unixfs"
+	uio "gx/ipfs/QmcLmU3rW9jmxPf2SZuvS15Dhtji4TivmuEca58HTdPRBm/go-unixfs/io"
+	unixfspb "gx/ipfs/QmcLmU3rW9jmxPf2SZuvS15Dhtji4TivmuEca58HTdPRBm/go-unixfs/pb"
 )
 
 type LsLink struct {

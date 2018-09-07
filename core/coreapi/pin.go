@@ -7,11 +7,11 @@ import (
 	coreiface "github.com/ipfs/go-ipfs/core/coreapi/interface"
 	caopts "github.com/ipfs/go-ipfs/core/coreapi/interface/options"
 	corerepo "github.com/ipfs/go-ipfs/core/corerepo"
-	merkledag "gx/ipfs/QmRDaC5z6yXkXTTSWzaxs2sSVBon5RRCN6eNtMmpuHtKCr/go-merkledag"
-	bserv "gx/ipfs/QmdHqV7L4bpmMtEXVCrgn8RN6CXqMr3aUeogSkXbJGRtwk/go-blockservice"
+	merkledag "gx/ipfs/QmSRe5UvVPLJ6LAtVH9gQZwEL4nbck5b5zNe4MChh3LJHk/go-merkledag"
+	bserv "gx/ipfs/QmZdQPXW1rNP2uhE5JbQKEftfdZVyhmXHmnzWvqzDrVsZH/go-blockservice"
 
-	cid "gx/ipfs/QmZFbDTY9jfSBms2MchvYM9oYRbAF19K7Pby47yDBfpPrb/go-cid"
-	offline "gx/ipfs/QmZxjqR9Qgompju73kakSoUj3rbVndAzky3oCDiBNCxPs1/go-ipfs-exchange-offline"
+	offline "gx/ipfs/QmUwhk1UmvGNN6vk4heQiHAwPuTMYRouV613S84wmKPDxk/go-ipfs-exchange-offline"
+	cid "gx/ipfs/QmcRoKTXnq18qQRZFa4jWwWvMQkxzWRpxCwcpCCFgnLUGi/go-cid"
 )
 
 type PinAPI CoreAPI
@@ -81,7 +81,7 @@ func (api *PinAPI) Update(ctx context.Context, from coreiface.Path, to coreiface
 }
 
 type pinStatus struct {
-	cid      *cid.Cid
+	cid      cid.Cid
 	ok       bool
 	badNodes []coreiface.BadPinNode
 }
@@ -115,8 +115,8 @@ func (api *PinAPI) Verify(ctx context.Context) (<-chan coreiface.PinStatus, erro
 	getLinks := merkledag.GetLinksWithDAG(DAG)
 	recPins := api.node.Pinning.RecursiveKeys()
 
-	var checkPin func(root *cid.Cid) *pinStatus
-	checkPin = func(root *cid.Cid) *pinStatus {
+	var checkPin func(root cid.Cid) *pinStatus
+	checkPin = func(root cid.Cid) *pinStatus {
 		key := root.String()
 		if status, ok := visited[key]; ok {
 			return status
@@ -171,7 +171,7 @@ func (api *PinAPI) pinLsAll(typeStr string, ctx context.Context) ([]coreiface.Pi
 
 	keys := make(map[string]*pinInfo)
 
-	AddToResultKeys := func(keyList []*cid.Cid, typeStr string) {
+	AddToResultKeys := func(keyList []cid.Cid, typeStr string) {
 		for _, c := range keyList {
 			keys[c.String()] = &pinInfo{
 				pinType: typeStr,

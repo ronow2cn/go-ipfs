@@ -11,12 +11,12 @@ import (
 	"context"
 	"errors"
 
+	posinfo "gx/ipfs/QmNkDLE6uKA69ucLesAjHkE3y7XAHTbn9tKYcpFtR2CuXE/go-ipfs-posinfo"
 	logging "gx/ipfs/QmRREK2CAZ5Re2Bd9zZFG6FeYDppUWt5cMgsoUEp3ktgSr/go-log"
+	blockstore "gx/ipfs/QmSz8PDzfMyZZpd8KnV3ti8LjFngwTuVstmhXfvA93cYqG/go-ipfs-blockstore"
 	dsq "gx/ipfs/QmVG5gxteQNEMhrS8prJSmU2C9rebtFuTd3SYZ5kE3YZ5k/go-datastore/query"
-	blocks "gx/ipfs/QmWAzSEoqZ6xU6pu8yL8e5WaMb7wtbfbhhN4p1DknUPtr3/go-block-format"
-	posinfo "gx/ipfs/QmXD4grfThQ4LwVoEEfe4dgR7ukmbV9TppM5Q4SPowp7hU/go-ipfs-posinfo"
-	cid "gx/ipfs/QmZFbDTY9jfSBms2MchvYM9oYRbAF19K7Pby47yDBfpPrb/go-cid"
-	blockstore "gx/ipfs/QmcmpX42gtDv1fz24kau4wjS9hfwWj5VexWBKgGnWzsyag/go-ipfs-blockstore"
+	blocks "gx/ipfs/QmVWmocy2WJk9ZvguJrNkPAkWiW5N5zdbaXrrvshZgsEFY/go-block-format"
+	cid "gx/ipfs/QmcRoKTXnq18qQRZFa4jWwWvMQkxzWRpxCwcpCCFgnLUGi/go-cid"
 )
 
 var log = logging.Logger("filestore")
@@ -49,7 +49,7 @@ func NewFilestore(bs blockstore.Blockstore, fm *FileManager) *Filestore {
 
 // AllKeysChan returns a channel from which to read the keys stored in
 // the blockstore. If the given context is cancelled the channel will be closed.
-func (f *Filestore) AllKeysChan(ctx context.Context) (<-chan *cid.Cid, error) {
+func (f *Filestore) AllKeysChan(ctx context.Context) (<-chan cid.Cid, error) {
 	ctx, cancel := context.WithCancel(ctx)
 
 	a, err := f.bs.AllKeysChan(ctx)
@@ -58,7 +58,7 @@ func (f *Filestore) AllKeysChan(ctx context.Context) (<-chan *cid.Cid, error) {
 		return nil, err
 	}
 
-	out := make(chan *cid.Cid, dsq.KeysOnlyBufSize)
+	out := make(chan cid.Cid, dsq.KeysOnlyBufSize)
 	go func() {
 		defer cancel()
 		defer close(out)
@@ -115,7 +115,7 @@ func (f *Filestore) AllKeysChan(ctx context.Context) (<-chan *cid.Cid, error) {
 // blockstore. As expected, in the case of FileManager blocks, only the
 // reference is deleted, not its contents. It may return
 // ErrNotFound when the block is not stored.
-func (f *Filestore) DeleteBlock(c *cid.Cid) error {
+func (f *Filestore) DeleteBlock(c cid.Cid) error {
 	err1 := f.bs.DeleteBlock(c)
 	if err1 != nil && err1 != blockstore.ErrNotFound {
 		return err1
@@ -140,7 +140,7 @@ func (f *Filestore) DeleteBlock(c *cid.Cid) error {
 
 // Get retrieves the block with the given Cid. It may return
 // ErrNotFound when the block is not stored.
-func (f *Filestore) Get(c *cid.Cid) (blocks.Block, error) {
+func (f *Filestore) Get(c cid.Cid) (blocks.Block, error) {
 	blk, err := f.bs.Get(c)
 	switch err {
 	case nil:
@@ -154,7 +154,7 @@ func (f *Filestore) Get(c *cid.Cid) (blocks.Block, error) {
 
 // GetSize returns the size of the requested block. It may return ErrNotFound
 // when the block is not stored.
-func (f *Filestore) GetSize(c *cid.Cid) (int, error) {
+func (f *Filestore) GetSize(c cid.Cid) (int, error) {
 	size, err := f.bs.GetSize(c)
 	switch err {
 	case nil:
@@ -168,7 +168,7 @@ func (f *Filestore) GetSize(c *cid.Cid) (int, error) {
 
 // Has returns true if the block with the given Cid is
 // stored in the Filestore.
-func (f *Filestore) Has(c *cid.Cid) (bool, error) {
+func (f *Filestore) Has(c cid.Cid) (bool, error) {
 	has, err := f.bs.Has(c)
 	if err != nil {
 		return false, err

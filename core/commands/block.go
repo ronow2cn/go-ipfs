@@ -16,8 +16,8 @@ import (
 	"gx/ipfs/QmPTfgFTo9PFr1PvPKyKoeMgBvYPh6cX3aDP7DHKVbnCbi/go-ipfs-cmds"
 	mh "gx/ipfs/QmPnFwZ2JXKnXgMw8CdBPxn7FWh6LLdjUjxV1fKHuJnkr8/go-multihash"
 	"gx/ipfs/QmSP88ryZkHSRn1fnngAaV2Vcn63WUJzAavnRM9CVdU1Ky/go-ipfs-cmdkit"
-	blocks "gx/ipfs/QmWAzSEoqZ6xU6pu8yL8e5WaMb7wtbfbhhN4p1DknUPtr3/go-block-format"
-	cid "gx/ipfs/QmZFbDTY9jfSBms2MchvYM9oYRbAF19K7Pby47yDBfpPrb/go-cid"
+	blocks "gx/ipfs/QmVWmocy2WJk9ZvguJrNkPAkWiW5N5zdbaXrrvshZgsEFY/go-block-format"
+	cid "gx/ipfs/QmcRoKTXnq18qQRZFa4jWwWvMQkxzWRpxCwcpCCFgnLUGi/go-cid"
 )
 
 type BlockStat struct {
@@ -291,7 +291,7 @@ It takes a list of base58 encoded multihashes to remove.
 		hashes := req.Arguments
 		force, _ := req.Options["force"].(bool)
 		quiet, _ := req.Options["quiet"].(bool)
-		cids := make([]*cid.Cid, 0, len(hashes))
+		cids := make([]cid.Cid, 0, len(hashes))
 		for _, hash := range hashes {
 			c, err := cid.Decode(hash)
 			if err != nil {
